@@ -1,0 +1,56 @@
+#Posible solucion al ejericicio 56 de https://retosdeprogramacion.com/ejercicios/
+#Escribe un programa que sea capaz de generar contraseñas de forma aleatoria.
+# * Podrás configurar generar contraseñas con los siguientes parámetros:
+# * - Longitud: Entre 8 y 16.
+# * - Con o sin letras mayúsculas.
+# * - Con o sin números.
+# * - Con o sin símbolos.
+# * (Pudiendo combinar todos estos parámetros entre ellos)
+
+import random
+
+def contraseñas(longitud=8, mayusculas=False, numeros=False, simbolos=False):
+
+    #Declaramos las variables
+    caracteres = list('abcdefghijklmnñopqrstuvwxyz')
+
+    if mayusculas:
+        caracteres.extend("ABCDEFGHIJKLMNÑOPQRSTUVWXYZ")
+    if numeros:
+        caracteres.extend("1234567890")
+    if simbolos:
+        caracteres.extend("!@·#$%&/()=?¿")
+
+    return "".join(random.choices(caracteres, k=longitud))
+
+
+# MENU DE OPCIONES DE USUARIO
+def menu():
+    while True:
+        print("BIENVENIDO AL GENERADOR DE CONTRASEÑAS")
+        
+        #Pedimos la longitud
+        while True:
+            try:
+                longitud = int(input("Introduzca una longitud comprendida entre 8 y 16: "))
+                if longitud >= 8 and longitud <= 16:
+                    break
+                else:
+                    print("Longitud fuera de rango")
+            except ValueError:
+                    print("Ingrese un numero válido")
+                           
+        mayusculas = input("¿Incluir mayusculas en la contraseña?(S/N)").strip().upper() == "S"
+        numeros = input("¿Incluir numeros en la contraseña?(S/N)").strip().upper() == "S"
+        simbolos = input("¿Incluir simbolos en la contraseña?(S/N)").strip().upper() == "S"
+
+        contraseña = contraseñas(longitud, mayusculas, numeros, simbolos)
+        if contraseña:
+            print(f"Contraseña generada: {contraseña}")
+
+        otra = input("¿Generar otra contraseña?(S/N)").strip().upper() 
+        if otra != "S":
+            print("Hasta otra!!")
+            break
+
+menu()
